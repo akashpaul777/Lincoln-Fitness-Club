@@ -7,11 +7,6 @@ Project is created with:
 * Bootstrap version: [5.0](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
 
 
-## Demo
-🔗 [LIVE DEMO](https://cookiext23.pythonanywhere.com/)
-* ### Home page
-  ![Home page](https://github.com/Cookiext23/Gym-Management-System-/assets/109332897/e4b1abc5-b3a3-4fe3-aefa-2eeb3120862d)
-
 * ### Training session booking
   ![Training session booking](https://github.com/Cookiext23/Gym-Management-System-/assets/109332897/be825c6f-2b94-469b-8c98-63341e9d4495)
 
