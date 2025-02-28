@@ -1,0 +1,8 @@
+click
+Flask
+mysql_connector_repackaged
+python_dateutil
+mysql-connector-python
+schedule
+apscheduler
+werkzeug

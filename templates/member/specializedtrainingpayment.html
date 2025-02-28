@@ -1,0 +1,68 @@
+<div class="modal fade" id="paymentModal-{{ result[0] }}" tabindex="-1" aria-labelledby="paymentModalLabel-{{ result[0] }}" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paymentModalLabel-{{ result[0] }}">Please confirm:</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <!-- Are you sure to book this session and pay for it now? <br>
+            we will process the payment from the credit card {{ member['CardNumber']}} -->
+            <ul class="list-group mb-3">
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="text-success">
+                        <h6 class="my-0">Training name: </h6>
+                    </div>
+                    <span>{{result[1]}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="text-success">
+                        <h6 class="my-0">Schedule ID: </h6>
+                    </div>
+                    <span>{{result[0]}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="text-success">
+                        <h6 class="my-0">Start Date: </h6>
+                    </div>
+                    <span>{{result[3].strftime('%d/%m/%Y')}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="text-success">
+                        <h6 class="my-0">Start Time: </h6>
+                    </div>
+                    <span>{{result[4]}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                    <div class="text-success">
+                        <h6 class="my-0">Class room: </h6>
+                    </div>
+                    <span>{{result[7]}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (NZD)</span>
+                    <strong>${{result[8]}}</strong>
+                </li>
+            </ul>
+            Are you sure to book this session and pay for it now? <br>
+            We will process this payment from the credit card in system. <br>
+            {{ member['CardNumber']}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <form action="{{ url_for('bookclass.bookst') }}" method="POST">
+            <input type="hidden" name="specialized_training_id" value="{{ result[0] }}">
+            <input type="hidden" name="specialized_training_start_date" value="{{ result[3] }}">
+            <input type="hidden" name="specialized_training_start_time" value="{{ result[4] }}">
+            <input type="hidden" name="specialized_training_end_time" value="{{ result[5] }}">
+            <input type="hidden" name="specialized_training_fee" value="{{ result[8] }}">
+            <input type="hidden" name="specialized_training_price_id" value="{{ result[9] }}">
+            <input type="hidden" name="specialized_training_name" value="{{ result[1] }}">
+            <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#paymentModal-{{ result[0] }}">
+              Book and Pay Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

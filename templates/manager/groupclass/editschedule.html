@@ -1,0 +1,80 @@
+<!-- function name -->
+{% extends "base.html" %}
+{% block title %}
+Update Group Class Schedule
+{% endblock %}
+{% block subtitle %}
+{% endblock %}
+{% block content %}
+{% for schedule in schduleinfo %}
+<div class="container-fluid col-12">
+  <form action="{{ url_for('groupclassmgmt.updateSchedule') }}" method="post">
+<fieldset class="row p-3 g-3 justify-content-center">
+  <legend>Details</legend>
+<div class="mb-3 col-lg-3">
+  <label for="scheduleid1" class="form-label" value="{{schedule[0]}}">Schedule ID</label>
+  <input type="text" class="form-control" name="scheduleid1" id="scheduleid1" value="{{schedule[0]}}" disabled>
+  <input type="hidden" class="form-control" name="scheduleid" id="scheduleid" value="{{schedule[0]}}">
+</div>
+<div class="col-lg-3">
+  <label for="trainingname" class="form-label">Training Name</label>
+  <input type="text" class="form-control" name="trainingname" id="trainingname" value="{{schedule[13]}}" disabled>
+</div>
+<div class="col-lg-3">
+  <label for="trainerid" class="form-label">Trainer</label>
+  <select id="trainerid" name="trainerid" class="form-select" required>
+    <option selected value="{{schedule[1]}}" >{{schedule[16]}} {{schedule[17]}}</option>  
+    {% for trainer in trainers %}
+    <option value="{{trainer[0]}}" >{{trainer[1]}} {{trainer[2]}}</option>
+    {% endfor %}
+  </select>
+</div>
+<div class="mb-3 col-lg-3">
+  <label for="duration" class="form-label">Duration</label>
+  <select id="duration" name="duration" class="form-select" required>
+  <option value="01:00:00">60 minutes</option>
+  </select>
+  </div>
+<div class="col-lg-3">
+  <label for="startdate" class="form-label">Date</label>
+  <input type="date" class="form-control" name="startdate" id="startdate" value="{{schedule[6]}}" min="{{todaydate}}" required>
+</div>
+<div class="col-lg-3">
+  <label for="starttime" class="form-label">Start Time</label>
+  <select id="starttime" name="starttime" class="form-select" required>
+    <option selected value="{{schedule[7]}}" >{{schedule[7]}}</option>  
+    <option value="06:00:00">06:00</option>
+    <option value="07:00:00">07:00</option>
+    <option value="08:00:00">08:00</option>
+    <option value="09:00:00">09:00</option>
+    <option value="10:00:00">10:00</option>
+    <option value="11:00:00">11:00</option>
+    <option value="12:00:00">12:00</option>
+    <option value="13:00:00">13:00</option>
+    <option value="14:00:00">14:00</option>
+    <option value="15:00:00">15:00</option>
+    <option value="16:00:00">16:00</option>
+    <option value="17:00:00">17:00</option>
+    <option value="18:00:00">18:00</option>
+    <option value="19:00:00">19:00</option>
+    <option value="20:00:00">20:00</option>
+  </select>
+</div>
+
+<div class="col-lg-3">
+  <label for="room" class="form-label">Room</label>
+  <select id="room" name="room" class="form-select" required>
+    <option selected value="Group Room" >Group Room</option>
+  </select>
+</div>
+<div class="col-lg-3">
+  <label for="maxcap" class="form-label">Max Capacity</label>
+  <input type="number" class="form-control" name="maxcap" id="maxcap" min="1" value="{{schedule[9]}}" max="30" required>
+</div>
+</fieldset>
+<div class="col text-center">
+  <button type="submit" class="btn btn-primary text-center">Save Change</button>
+  <button type="reset" class="btn btn-secondary text-center">Reset</button>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,25 @@
+<!-- function name: select to show specialized training or group class info in the next 30 days -->
+{% extends "base.html" %}
+{% block title %}
+Please choose a class type to start booking:
+{% endblock %}
+{% block subtitle %}
+-- To show the class information --
+{% endblock %}
+{% block content %}
+<div class="container-fluid p-3 g-3 d-flex  justify-content-center">
+  <form class="row col-lg-10  p-3 g-3  justify-content-center" action="{{ url_for('bookclass.selectclass') }}" method="post">
+      <div class="col-lg-4">
+        <select id="class_type" name="class_type" class="form-select" required>
+          <option value="" selected>Select on option</option>
+          <option value="specialized training">Specialized Training Session</option>
+          <option value="group class">Group Class</option>
+        </select>
+      </div>
+
+      <div class="d-flex col-lg-2 justify-content-center">
+       <button type="submit" class="btn btn-primary">Select</button>
+      </div>
+  </form>
+</div>
+{% endblock %}

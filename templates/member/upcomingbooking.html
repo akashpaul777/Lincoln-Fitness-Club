@@ -1,0 +1,26 @@
+<h5>Upcoming booking</h5>
+{% if upcoming_booking %}
+<table class="table table-striped w-100 table-hover table-bordered align-middle">
+    <thead class="text-center">
+      <tr>
+      {% for col in upcoming_booking_cols%}
+        <th>{{col}}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody class="text-center">
+      {% for result in upcoming_booking %}
+      <tr>
+        {% for cell in result%}
+        <td>{{cell}}</td>
+        {% endfor%}  
+      </tr>
+      {% endfor %}  
+    </tbody>
+</table>
+{% else %}
+<div class="text-center">
+<p>There is no any upcoming bookings</p>
+</div>
+{% endif %}

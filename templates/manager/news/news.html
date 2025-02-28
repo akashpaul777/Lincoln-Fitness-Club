@@ -1,0 +1,62 @@
+<!-- function: showing all gym news -->
+{% extends "base.html" %}
+{% block title %}
+  Gym News List
+{% endblock %}
+{% block subtitle %}
+  -- A list of all Gym News --
+{% endblock %}
+{% block content %}
+
+{% if news_list %}
+  <table class="table table-striped w-100 table-hover table-bordered align-middle">
+    <thead class="text-center">
+    <tr>
+        <th scope="col ">News ID</th>
+        <th scope="col ">Title</th>
+        <th scope="col ">Date</th>
+        <th scope="col ">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+      {% for news in news_list %}
+        <tr>
+            <td class="text-center col=2">{{news[0]}}</td>
+            <td class="text-center col-5">{{news[1]}}</td>
+            <td class="text-center col-2">{{news[3]}}</td>
+            <td class="text-center">
+              <form action="{{ url_for('news.editnews') }}" method="POST">
+                  <input type="hidden" name="newsid" value="{{news[0]}}">  
+                  <button class="btn btn-warning text-center" type="submit" >Update</button>
+                  <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletenews">Delete</button>
+                  <!-- Modal -->
+                  <div class="modal fade" id="deletenews" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="ModalLabel">Delete news</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                          Attention: This news will be delete and can not be recovery. Do you want to delete it?
+                          </div>
+                          <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" formaction="{{ url_for('news.delnews') }}" class="btn btn-primary">Delete</button>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+              </form>
+        </tr>
+  {% endfor %}
+    </tbody>
+    </table>
+{% else %}
+  <div class="head text-center text-danger"  ><h5>No gym news.</h5></div>
+{% endif %}
+<div class="col text-center">
+  <a class="btn btn-primary" href="{{ url_for('news.addnews') }}" role="button">Add News</a>
+</div>
+
+{% endblock %}

@@ -1,0 +1,63 @@
+
+<!-- function name -->
+{% extends "base.html" %}
+{% block title %}
+    {% if class_type == 'group_class' %}
+        Popular Group Classes
+    {% else %}
+        Popular Specialized Training Sessions
+    {% endif %}
+{% endblock %}
+
+{% block subtitle %}
+    {% if class_type == 'group_class' %}
+    A list of group classses order by attendances
+    {% else %}
+    A list of specialized trainings order by attendances
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+<form action="{{ url_for('popularclasses.classes') }}" method="get">
+    <div class="row">
+        <label for="class_type" class="form-label">Filter by:</label>
+        <div class="col-lg-4 pb-3 d-flex align-items-center justify-content-start">
+        <select id="class_type" name="class_type" class="form-select" required>
+            {% if class_type == 'group_class' or class_type == none %}
+                <option selected value="group_class">Group Class</option>
+            {% else %}
+                <option value="group_class">Group Class</option>
+            {% endif %}
+            {% if class_type == 'specialized_training_session' %}
+                <option selected value="specialized_training_session">Specialized Training Session</option> 
+            {% else %}
+                <option value="specialized_training_session">Specialized Training Session</option> 
+            {% endif %}
+        </select>
+      </div>
+      <div class="col-lg-2">
+        <button type="submit" class="btn btn-primary">Select</button>
+      </div>
+    </div>
+</form>
+<br><br>
+<table class="table table-striped w-100 table-hover table-bordered align-middle table-responsive">
+    <thead class="text-center">
+        <tr>
+        {% for col in db_cols%}
+        <th>{{col}}</th>
+        {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody class="text-center">
+        {% for result in db_result %}
+        <tr>
+        {% for cell in result%}
+        <td>{{cell}}</td>
+        {% endfor%}
+        </tr>
+        {% endfor %}  
+    </tbody>
+</table>
+{% endblock %}

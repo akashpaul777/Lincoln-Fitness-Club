@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block title %}
+Update Member Detail
+{% endblock %}
+{% block content %}
+<form class="row g-3" method="post" action="">
+    <input type="text" hidden name="id" value="{{ member_info.id }}">
+    <div class="col-md-3">
+        <label class="form-label">First name</label>
+        <input type="text" class="form-control" name="Firstname" value="{{ member_info.Firstname }}" required
+            maxlength="45" pattern="[A-Za-z\s]+" oninput="this.value=this.value.replace(/(?![a-z])./gmi,'')">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Last name</label>
+        <input type="text" class="form-control" name="Lastname" value="{{ member_info.Lastname }}" required
+            maxlength="45" pattern="[A-Za-z\s]+" oninput="this.value=this.value.replace(/(?![a-z])./gmi,'')">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Gender</label>
+        <select class="form-select" name="Gender" required>
+            <option disabled>Choose...</option>
+            <option value="Male" {% if member_info.gender=='Male' %}selected{% endif %}>Male</option>
+            <option value="Female" {% if member_info.gender=='Female' %}selected{% endif %}>Female</option>
+            <option value="Other" {% if member_info.gender=='Other' %}selected{% endif %}>Other</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Day Of Birth</label>
+        <input type="date" class="form-control" id="birth" name="DayOfBirth" value="{{ member_info.DayOfBirth }}"
+            required pattern="\d{4}-\d{2}-\d{2}">
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Phone Number</label>
+        <div class="input-group">
+            <input type="text" title="9 to 10 digits" class="form-control" name="Phonenumber" required maxlength="10"
+                pattern=".{9,10}" minlength="9" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')"
+                value="{{ member_info.PhoneNumber }}">
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <div class="input-group">
+            <input type="email" class="form-control" name="Email" required maxlength="250"
+                value="{{ member_info.email }}">
+        </div>
+    </div>
+    <div class="col-md-12">
+        <label class="form-label">Health Condition (Hold down the Ctrl (Windows) / Command (mac) button to select
+            multiple options)</label>
+        <select class="form-select" name="HealthCondition" required multiple>
+            <option value="Good Health" {% if 'Good Health' in member_info.HealthCondition %}selected{% endif %}>Good
+                Health</option>
+            <option value="Heart Disease" {% if 'Heart Disease' in member_info.HealthCondition %}selected{% endif %}>
+                Heart Disease</option>
+            <option value="High Blood Pressure" {% if 'High Blood Pressure' in member_info.HealthCondition %}selected{%
+                endif %}>High Blood Pressure</option>
+            <option value="Asthma" {% if 'Asthma' in member_info.HealthCondition %}selected{% endif %}>Asthma</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">House number/name</label>
+        <input type="text" class="form-control" name="HouseNumberName" required maxlength="15"
+            value="{{ member_info.HouseNumberName }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Street</label>
+        <input type="text" class="form-control" name="Street" required maxlength="45" value="{{ member_info.Street }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Town</label>
+        <input type="text" class="form-control" name="Town" required maxlength="25" pattern="[A-Za-z\s]+"
+            oninput="this.value=this.value.replace(/(?![a-z ])./gmi,'')" value="{{ member_info.Town }}">
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">City</label>
+        <input type="text" class="form-control" name="City" required maxlength="25" pattern="[A-Za-z]+"
+            oninput="this.value=this.value.replace(/(?![a-z])./gmi,'')" value="{{ member_info.City }}">
+    </div>
+    <div class="col-md-2">
+        <label class="form-label">Postal code</label>
+        <input type="text" class="form-control" name="Postalcode" required maxlength="4"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')" value="{{ member_info.Postalcode }}">
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Membership Term</label>
+        <select class="form-select" name="MembershipTerm" required>
+            <option disabled selected value="{{ member_info.MembershipTerm }}">
+                {% if member_info.MembershipTerm == 123400 %} Yearly
+                {% else %} Monthly{% endif %}
+            </option>
+            {% for term in terms %}
+            <option value="{{ term[0] }}">{{ term[1] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Membership StartDate</label>
+        <input type="date" class="form-control dt-picker" name="MembershipStartDate" required
+            pattern="\d{4}-\d{2}-\d{2}" id="startDate" value="{{ member_info.MembershipStartDate }}">
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Membership EndDate</label>
+        <input type="date" class="form-control" name="MembershipEndDate" required
+            value="{{ member_info.MembershipEndDate }}">
+    </div>
+    <div class="col-md-4">
+        <label class="form-label">Card Number e.g.: 5555555555554444</label>
+        <input type="text" class="form-control" name="CardNumber" required maxlength="25" minlength="25"
+            placeholder="e.g.: 5555555555554444" oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')"
+            value="{{ member_info.cardNumber | b64decode }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">CVV</label>
+        <input type="text" class="form-control" name="CVV" required maxlength="3"
+            oninput="this.value=this.value.replace(/(?![0-9])./gmi,'')" value="{{ member_info.CVV | b64decode }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Card Expiry</label>
+        <input type="month" class="form-control" name="CardExpiry" required maxlength="10"
+            value="{{ member_info.CardExpiry }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Name On Card</label>
+        <input type="text" class="form-control" name="NameOnCard" required maxlength="45"
+            oninput="this.value=this.value.replace(/(?![a-z\s])./gmi,'')" value="{{ member_info.NameOnCard | b64decode }}">
+    </div>
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+</form>
+<script>
+    let birth = document.querySelector('#birth')
+    const today = new Date();
+    const minDate = new Date(today.getFullYear() - 14, today.getMonth(), today.getDate());
+    birth.max = minDate.toISOString().slice(0, 10);
+</script>
+{% endblock %}

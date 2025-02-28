@@ -1,0 +1,44 @@
+<!-- function name -->
+{% extends "base.html" %}
+{% block title %}
+Group Class List
+{% endblock %}
+{% block subtitle %}
+{% endblock %}
+{% block content %}
+<div class="table-responsive">
+<!-- function table/form: do not change the bootstrap code -->
+<div class="container-fluid col-12">
+<form class="row row-cols-1 justify-content-center p-3 g-3" action="{{ url_for('groupclassmgmt.training') }}" method="post">
+    <div class="mb-3 col-lg-2">
+    <h5> Add group class: </h5>
+    </div>
+    <div class="mb-3 col-lg-3">
+    <input type="text" class="form-control" id="trname" name="trname" placeholder="Group Class Name" required> 
+    </div>
+    <div class="mb-3 col-lg-4">
+    <input type="text" class="form-control" id="trintro" name="trintro" placeholder="Introduction" required>  
+    </div>
+    <div class="mb-3 col-lg-1">  
+    <button class="btn btn-primary text-center" type="submit">Add</button>
+    </div>
+</form>
+
+<table class="table table-striped w-100 table-hover table-bordered align-middle">
+    <thead class="text-center">
+    <tr>
+        <th scope="col">Group Class Name</th>
+        <th scope="col">Introduction</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for training in traininginfo %}
+    <tr>
+            <td class="text-left col-lg-3">{{training[3]}}</td>
+            <td class="text-left">{{training[4]}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

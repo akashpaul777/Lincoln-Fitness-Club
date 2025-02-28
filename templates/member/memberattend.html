@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card text-center" style="max-width:500px;margin:0 auto">
+  <div class="card-header">
+    Check in
+  </div>
+  <div class="card-body" style="padding:30px 0 50px">
+    <form action="" method="post">
+      <label class="form-label">Your member ID</label>
+      <input oninput="this.value=this.value.replace(/[^0-9]/g,'')" placeholder=""
+        style="width:300px;margin: 0 auto 30px;" type="text" class="form-control" name="memberId" value="" required>
+      <button class="btn btn-primary" style="width:180px;box-shadow: 0px 5px 5px #c8c8c8;">Check In</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

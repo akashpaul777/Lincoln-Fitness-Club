@@ -1,0 +1,60 @@
+<!-- function: showing all classes -->
+{% extends "base.html" %}
+{% block title %}
+Booking & Attendance - Specialized Training List
+{% endblock %}
+{% block subtitle %}
+  -- A list of Specialized Training in the past--
+{% endblock %}
+{% block content %}
+<div class="container-fluid col-12">
+    <!-- Filter: select trainer from the drop-down list -->
+    <form action="{{ url_for('manager_admin.st') }}" method="post">
+      <div class="row">
+        <label for="trainerID" class="form-label">Filter by:</label>
+        <div class="col-lg-4 pb-3 d-flex align-items-center justify-content-start">
+        <select id="trainerID" name="trainerID" class="form-select" required>
+          <option selected disabled value="">Select a Trainer</option>    
+            {% for trainer in all_trainer %}
+            <option value="{{trainer[1]}}" >{{trainer[0]}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-lg-2">
+          <button type="submit" class="btn btn-primary">Select</button>
+        </div>
+      </div>
+    </form>
+    <br><br>
+
+    {% if db_result %}
+    <!-- Specialized Training Session List table -->
+    <table class="table table-striped w-100 table-hover table-bordered align-middle">
+      <thead class="text-center">
+        <tr>
+        {% for col in db_cols%}
+          <th>{{col}}</th>
+        {% endfor %}
+        </tr>
+      </thead>
+  
+      <tbody class="text-center">
+        {% for result in db_result %}
+        <tr>
+          {% for cell in result%}
+          <td>{{cell}}</td>
+          {% endfor%}
+        </tr>
+        {% endfor %}  
+      </tbody>
+    </table>
+    {% else %}
+      <div class="head text-center" style="color: red;" >Nothing found</div>
+    {% endif %}
+
+    <br>
+    <div class="col text-center">
+      <a class="btn btn-primary" href="{{ url_for('manager_admin.classtype') }}" role="button">Re-select class type</a>
+    </div>
+  </div>
+{% endblock %}

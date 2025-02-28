@@ -1,0 +1,75 @@
+<!-- function name: showing all payments information in past 30 days -->
+{% extends "base.html" %}
+{% block title %}
+  Payments List 
+{% endblock %}
+{% block subtitle %}
+-- Only showing the specialized training and membership fee payments in past 30 days --
+{% endblock %}
+{% block content %}
+<br>
+<div class="col text-center">
+  <a class="btn btn-primary" href="{{ url_for('manager_admin.membershipfee') }}" role="button">Membership Fee Payment ONLY</a>
+  <a class="btn btn-primary" href="{{ url_for('manager_admin.trainingfee') }}" role="button">Specialized Training Payment ONLY</a>
+</div>
+<br>
+
+<div class="container-fluid col-12">
+
+  <!-- TABLE 1: membership fees-->
+  <h2 class="text-left">Membership Fee Payment</h2>
+  {% if db_result1 %}
+  <table class="table table-striped w-100 table-hover table-bordered align-middle">
+    <thead class="text-center">
+      <tr>
+      {% for col in db_cols1%}
+        <th>{{col}}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody class="text-center">
+      {% for result in db_result1 %}
+      <tr>
+        {% for cell in result%}
+        <td>{{cell}}</td>
+        {% endfor%}
+ 
+      </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+  {% else %} 
+    <div class="head text-center">Nothing found</div>
+  {% endif %}
+  <br><br>
+
+  <!-- TABLE 2: specialized training session fees-->
+  <h2 class="text-left">Specialized Training Payment</h2>
+  {% if db_result2 %}
+  <table class="table table-striped w-100 table-hover table-bordered align-middle">
+    <thead class="text-center">
+      <tr>
+      {% for col in db_cols2%}
+        <th>{{col}}</th>
+      {% endfor %}
+      </tr>
+    </thead>
+
+    <tbody class="text-center">
+      {% for result in db_result2 %}
+      <tr>
+        {% for cell in result%}
+        <td>{{cell}}</td>
+        {% endfor%}
+ 
+      </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+  {% else %}
+    <div class="head text-center" style="color: red;" >Nothing found</div>
+  {% endif %}
+
+</div>
+{% endblock %}

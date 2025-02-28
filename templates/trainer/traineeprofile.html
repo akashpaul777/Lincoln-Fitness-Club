@@ -1,0 +1,82 @@
+<!-- function name -->
+{% extends "base.html" %}
+{% block title %}
+Trainee's Profile
+{% endblock %}
+{% block subtitle %}
+
+{% endblock %}
+{% block content %}
+{% for member in memberinfo %}
+<div class="container-fluid col-12">
+  <form disabled>
+<fieldset class="row p-3 g-3 justify-content-center">
+  <legend>Member Info</legend>
+<div class="mb-3 col-lg-2">
+  <label for="memberid1" class="form-label" value="{{member[0]}}">Member ID</label>
+  <input type="text" class="form-control" name="memberid1" id="memberid1" value="{{member[0]}}" disabled>
+</div>
+<div class="col-lg-2">
+  <label for="firstname" class="form-label">First Name</label>
+  <input type="text" class="form-control" name="firstname" id="firstname" value="{{member[1]}}" disabled>
+</div>
+<div class="col-lg-2">
+  <label for="lastname" class="form-label">Last Name</label>
+  <input type="text" class="form-control" name="lastname" id="lastname" value="{{member[2]}}" disabled>
+</div>
+<div class="col-lg-2">
+  <label for="gender" class="form-label">Gender</label>
+  <select id="gender" name="gender" class="form-select" disabled>
+    <option selected value="{{member[3]}}" >{{member[3]}}</option>
+  </select>
+</div>
+<div class="col-lg-2">
+  <label for="dateofbirth" class="form-label">Date of birth</label>
+  <input type="date" class="form-control" name="dayofbirth" id="dayofbirth" value="{{member[4]}}" disabled>
+</div>
+<div class="col-lg-10">
+  <label for="healthcondition" class="form-label">Health Condition</label>
+  <input type="text" class="form-control" name="healthcondition" id="healthcondition" value="{{member[7]}}" disabled>
+</div>
+</fieldset>
+<fieldset class="row p-3 g-3 justify-content-center">
+  <legend>Contact</legend>
+<div class="col-lg-5">
+  <label for="email" class="form-label">Email Address</label>
+  <input type="email" class="form-control" name="email" id="email" value="{{member[5]}}" disabled>
+</div>
+<div class="col-lg-5">
+  <label for="phonenumber" class="form-label">Phone Number</label>
+  <input type="text" class="form-control" name="phonenumber" id="phonenumber" value="{{member[6]}}" disabled>
+</div>
+</fieldset>
+<fieldset class="row p-3 g-3 justify-content-center">
+<legend>Address</legend>
+
+<div class="col-lg-3">
+  <label for="housenumbername" class="form-label">House Number/Name</label>
+  <input type="text" class="form-control" name="housenumbername" id="housenumbername" pattern="[A-Za-z0-9\s]+" value="{{member[8]}}" maxlength="15" disabled>
+</div>
+<div class="col-lg-7">
+  <label for="street" class="form-label">Street</label>
+  <input type="text" class="form-control" name="street" id="street" value="{{member[9]}}" pattern="[A-Za-z0-9\s]+" maxlength="45" disabled>
+</div>
+<div class="col-lg-3">
+  <label for="town" class="form-label">Town</label>
+  <input type="text" class="form-control" name="town" id="town" value="{{member[10]}}" pattern="[A-Za-z\s]+" maxlength="25" disabled>
+</div>
+<div class="col-lg-3">
+  <label for="city" class="form-label">City</label>
+  <input type="text" class="form-control" name="city" id="city" value="{{member[11]}}" pattern="[A-Za-z]+" maxlength="25" disabled>
+</div>
+<div class="col-lg-4 mb-3">
+  <label for="postalcode" class="form-label">PostCode</label>
+  <input type="number" class="form-control" name="postalcode" id="postalcode" min="1000" max="9999" value="{{member[12]}}" disabled>
+</div>
+</fieldset>
+
+<div class="col text-center">
+  <button type="button" class="btn btn-primary col-auto text-center" onclick="history.back()">Return</button>
+</div>
+{% endfor %}
+{% endblock %}

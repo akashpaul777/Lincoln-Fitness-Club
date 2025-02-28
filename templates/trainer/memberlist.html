@@ -1,0 +1,64 @@
+<!-- function name: showing all members information -->
+{% extends "base.html" %}
+{% block title %}
+    Member List
+{% endblock %}
+{% block subtitle %}
+    -- A list of all members in our club --
+{% endblock %}
+{% block content %}
+    <div class="row mb-2">
+        <div class="col-lg-4">
+            <form method="post" action="{{ url_for('trainermgmt.search') }}" style="max-width: 450px; margin: auto 0 auto auto">
+                <div class="input-group mb-3">
+                    <input name="search_type" type="text" class="form-control" placeholder="Member's First Name or Last Name or ID">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="table-responsive">
+    <table class="table table-striped w-100 table-hover table-bordered align-middle">
+        <thead class="text-center">
+        <tr>
+            <th scope="col">Member ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Day Of Birth</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for member in member_list %}
+            
+            <tr>
+                <td class="text-center">{{member.ID}}</td>
+                <td class="text-center">{{member.Firstname}}</td>
+                <td class="text-center">{{member.Lastname}}</td>
+                <td class="text-center">{{member.Gender}}</td>
+                <td class="text-center">{{member.DayOfBirth}}</td>
+                <td class="text-left">{{member.PhoneNumber}}</td>
+                <td class="text-left">{{member.Email}}</td>
+                <td class="text-left">{{member.Address}}</td>
+                <td class="text-center">
+                    {% if member.IsActive %}
+                        <span class="badge text-bg-success">
+                        Active
+                        </span>
+                    {% else %}
+                        <span class="badge text-bg-warning">
+                        Inactive
+                        </span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

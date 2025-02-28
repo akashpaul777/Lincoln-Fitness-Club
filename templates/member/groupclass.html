@@ -1,0 +1,111 @@
+<!-- function name: showing all group class in the next 30 days -->
+{% extends "base.html" %}
+{% block title %}
+Group Class List 
+{% endblock %}
+{% block subtitle %}
+-- To show the class information --
+{% endblock %}
+{% block content %}
+<div class="container-fluid col-12">
+  <table class="table table-striped w-100 table-hover table-bordered align-middle">
+    <thead class="text-center">
+      <tr>
+        <th scope="col">Class Name</th>
+        <th scope="col">Trainer Name</th>
+        <th scope="col">Date</th>
+        <th scope="col">Start Time</th>
+        <th scope="col">End Time</th>
+        <th scope="col">Room</th>
+        <th scope="col">Remaining Seat</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+
+    <tbody class="text-center">
+      {% for result in db_result %}
+          <tr>
+            <td class="text-center">{{result[1]}}</td>
+            <td class="text-center">{{result[2]}}</td>
+            <td class="text-center">{{result[3]}}</td>
+            <td class="text-center">{{result[4]}}</td>
+            <td class="text-center">{{result[5]}}</td>
+            <td class="text-center">{{result[7]}}</td>
+            <td class="text-center">{{result[8]}}</td>
+            <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-{{result[0]}}" {% if result[8] == 0 %} disabled {% endif %}>Book Now</button>
+                
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal-{{result[0]}}" tabindex="-1" aria-labelledby="exampleModal-{{result[0]}}" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModal-{{result[0]}}">Confirm Booking</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Are you sure to book this class now?
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <form action="{{ url_for('bookclass.bookgc') }}" method="POST">
+                          <input type="hidden" name="scheduleid" value="{{ result[0]}}">
+                          <input type="hidden" name="startdate" value="{{ result[3]}}">
+                          <input type="hidden" name="starttime" value="{{ result[4]}}">
+                          <input type="hidden" name="endtime" value="{{ result[5]}}">
+                          <input type="hidden" name="duration" value="{{ result[6]}}">
+                          <input type="hidden" name="remainseat" value="{{ result[8]}}">
+                          <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-{{result[0]}}">Confirm Booking</button>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Class detail & trainer's bio -->
+                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel">{{result[1]}} introduction</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        {{result[9]}}
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">View Trainer's bio</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Trainer's Bio</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Trainer's Name: {{result[2]}}</p>
+                        <p>{{result[10]}}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to {{result[1]}} introduction</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <a class="btn btn-warning" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Details</a>
+            </td>  
+          </tr>
+      {% endfor %}  
+    </tbody>
+  </table>
+
+  <div class="col text-center">
+    <a class="btn btn-primary" href="{{ url_for('bookclass.classtype') }}" role="button">Re-select class type</a>
+  </div>
+
+</div>
+{% endblock %}

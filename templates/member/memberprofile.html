@@ -1,0 +1,56 @@
+<!-- function name -->
+{% extends "base.html" %}
+{% block title %}
+Member Profile
+{% endblock %}
+{% block subtitle %}
+
+{% endblock %}
+{% block content %}
+<div class="table-responsive">
+  <!-- function table/form: do not change the bootstrap code -->
+  <div class="container-fluid col-12">
+  
+  
+  <table class="table table-striped w-100 table-hover table-bordered align-middle">
+      <thead class="text-center">
+      <tr>
+          <th scope="col">Member ID</th>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Gender</th>
+          <th scope="col">DOB</th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Membership Start Date</th>
+          <th scope="col">Membership End Date</th>
+          <th scope="col">Subscription</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      {% for member in memberinfo %}
+      <tr>
+              <td class="text-center">{{member[0]}}</td>
+              <td class="text-center">{{member[1]}}</td>
+              <td class="text-center">{{member[2]}}</td>
+              <td class="text-center">{{member[3]}}</td>
+              <td class="text-center">{{member[4]}}</td>
+              <td class="text-center">{{member[5]}}</td>
+              <td class="text-center">{{member[6]}}</td>
+              <td class="text-center">{{member[13]}}</td>
+              <td class="text-center">{{member[14]}}</td>
+              <td class="text-center">{{member[15]}}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+
+  <div class="col text-center">
+    <a class="btn btn-primary" href="{{ url_for('memberprofile.memberUpdate') }}" role="button">Update My Profile </a>
+  </div>
+
+  </div>
+
+</div>
+{% endblock %}

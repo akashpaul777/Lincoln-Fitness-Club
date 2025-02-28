@@ -1,0 +1,121 @@
+<!-- function name: select to show specialized training or group class info in the next 30 days -->
+{% extends "base.html" %}
+{% block title %}
+Personal Attendance Report - No. {{memberid}}
+{% endblock %}
+{% block subtitle %}
+{% endblock %}
+{% block content %}
+  <div class="container-fluid col-8">
+  <canvas id="myChart" ></canvas>
+  <form onsubmit="return validateDates()" action="{{ url_for('userreport.index') }}" method="GET">
+    <fieldset class="row p-3 g-3 justify-content-center">
+    <div class="mb-3 col-lg-5">
+    <input type="hidden"  class="form-select" id="memberid" name="memberid" value="{{memberid}}" >
+		<label for="date1" class="form-label">Start date:</label>
+		<input type="date"  class="form-select" id="date1" name="date1" required>
+    </div>
+    <div class="mb-3 col-lg-5">
+		<label for="date2" class="form-label">End date:</label>
+		<input type="date"  class="form-select" id="date2" name="date2" required>
+    </div>
+    <div class="col-lg-10 text-center">
+      <button type="submit" class="btn btn-primary text-center">Search</button>
+      <a class="btn btn-primary" href="{{ url_for('management.member_list') }}">Member List</a>
+      <!-- <a class="btn btn-warning" href="{{ url_for('manager_admin.paymentinfo') }}" role="button">Last 30 Days Payment</a> -->
+    </div>
+    </div>
+  </div>
+</fieldset>
+</form>
+</div>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    var date1 =  urlParams.get("date1");
+    var date2 =  urlParams.get("date2");
+    var chartTitle = date1 ? "Visits from " + date1 + " to " + date2 : "Total Number of Visit";
+    var ctx = document.getElementById("myChart").getContext("2d");
+    var totalSum = parseInt({{normalvisit}}) + parseInt({{groupclassvisit}}) + parseInt({{specializedvisit}});
+
+    var chartData = {
+        labels: ['Total visits: '+totalSum + " times",] ,
+        datasets: [
+        {
+            label: ['Normal Visit'],
+            data: [{{normalvisit}}],
+            backgroundColor: 
+            'rgba(255, 99, 132, 0.2)'
+        },
+        {
+          label: ['Group Class'],
+          data: [{{groupclassvisit}}],
+          backgroundColor: 
+          'rgba(255, 205, 86, 0.2)'
+        },
+        {
+        label: ['PT Session'],
+        data: [{{specializedvisit}}],
+        backgroundColor: 
+          'rgba(255, 255, 86, 0.2)'
+        },
+        ]
+    };
+    var chartOptions = {
+        plugins: {
+
+            title: {
+              display: true,
+              text: chartTitle,
+              font: {
+                size: 24}
+            },
+            datalabels: {
+                anchor: 'center',
+                 formatter: function(value, context) {
+                  return context.dataset.label + " " + value + " times";},
+                font: {
+                    weight: 'bold',
+                    size: 18,
+                }
+            },
+          },
+          responsive: true,
+          scales: {
+            x: {
+              stacked: false,
+            },
+            y: {
+              stacked: false
+            },
+            
+          },
+    };
+    var myChart = new Chart(ctx, {
+        type: "bar",
+        data: chartData,
+        options: chartOptions,
+        plugins: [ChartDataLabels]
+    });
+</script>
+<script>
+  function validateDates() {
+    // Get the values of the input fields
+    var input1 = document.getElementById("date1").value;
+    var input2 = document.getElementById("date2").value;
+
+    // Parse the input values as date objects
+    var date1 = new Date(input1);
+    var date2 = new Date(input2);
+    var today = new Date();
+
+    // Validate the dates
+    if (date1 >= date2) {
+      alert("Error: the start date must be earlier than the end date.");
+      return false;
+    }
+    // If validation passes, allow the form submission
+    return true;
+  }
+</script>
+
+{% endblock %}
